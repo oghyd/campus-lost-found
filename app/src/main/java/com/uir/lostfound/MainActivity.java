@@ -1,5 +1,6 @@
 package com.uir.lostfound;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -33,5 +34,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Lancer ItemFeedActivity au démarrage
+        Intent intent = new Intent(this, ItemFeedActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
