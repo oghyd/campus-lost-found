@@ -35,6 +35,9 @@ public class ItemFeedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Campus Lost & Found");
 
+        // Ajouter un bouton dans le menu pour accéder à Mes Annonces
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         // Configurer RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,5 +71,20 @@ public class ItemFeedActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         realmHelper.close();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.feed_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_my_posts) {
+            Intent intent = new Intent(this, MyPostsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
