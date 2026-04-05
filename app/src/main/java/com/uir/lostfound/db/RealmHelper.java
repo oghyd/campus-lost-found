@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class RealmHelper {
     private static RealmHelper instance;
@@ -34,14 +35,14 @@ public class RealmHelper {
 
     public RealmResults<LostItem> getAllItems() {
         return realm.where(LostItem.class)
-                .sort("timestamp", RealmResults.SORT_ORDER_DESCENDING)
+                .sort("timestamp", Sort.DESCENDING)
                 .findAll();
     }
 
     public RealmResults<LostItem> getItemsByOwner(String studentId) {
         return realm.where(LostItem.class)
                 .equalTo("ownerStudentId", studentId)
-                .sort("timestamp", RealmResults.SORT_ORDER_DESCENDING)
+                .sort("timestamp", Sort.DESCENDING)
                 .findAll();
     }
 

@@ -1,13 +1,11 @@
 package com.uir.lostfound;
 
 import android.os.Bundle;
-import android.widget.SearchView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.uir.lostfound.adapter.ItemFeedAdapter;
-import com.uir.lostfound.db.DataSeeder;
 import com.uir.lostfound.db.RealmHelper;
 import com.uir.lostfound.model.LostItem;
 import io.realm.RealmResults;
@@ -16,7 +14,6 @@ public class ItemFeedActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ItemFeedAdapter adapter;
-    private SearchView searchView;
     private RealmHelper realmHelper;
 
     @Override
@@ -24,67 +21,27 @@ public class ItemFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_feed);
 
-        // Initialiser RealmHelper
-        realmHelper = RealmHelper.getInstance();
+        try {
+            realmHelper = RealmHelper.getInstance();
+            recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Ajouter des données de test
-        DataSeeder.seedData(realmHelper);
+            RealmResults<LostItem> items = realmHelper.getAllItems();
+            adapter = new ItemFeedAdapter(this, items);
+            recyclerView.setAdapter(adapter);
 
-        // Configurer Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Campus Lost & Found");
-
-        // Ajouter un bouton dans le menu pour accéder à Mes Annonces
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        // Configurer RecyclerView
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Charger les données
-        loadItems();
-
-        // Configurer SearchView
-        searchView = findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.filter(newText);
-                return true;
-            }
-        });
-    }
-
-    private void loadItems() {
-        RealmResults<LostItem> items = realmHelper.getAllItems();
-        adapter = new ItemFeedAdapter(this, items);
-        recyclerView.setAdapter(adapter);
+            Toast.makeText(this, "Items trouvés : " + items.size(), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Erreur : " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        realmHelper.close();
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.feed_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_my_posts) {
-            Intent intent = new Intent(this, MyPostsActivity.class);
-            startActivity(intent);
-            return true;
+        if (realmHelper != null) {
+            realmHelper.close();
         }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -13,6 +13,7 @@ public class MyApplication extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("lostfound.realm")
                 .schemaVersion(1)
+                .allowWritesOnUiThread(true)
                 .build();
         Realm.setDefaultConfiguration(config);
     }

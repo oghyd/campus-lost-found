@@ -51,6 +51,7 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
         // Type (Lost/Found)
         if ("LOST".equals(item.getType())) {
             holder.typeChip.setText("📢 PERDU");
+            // Utilisation de ressources de couleur si possible, sinon hex
             holder.typeChip.setBackgroundColor(0xFFFFEB3B);
         } else {
             holder.typeChip.setText("🔍 TROUVÉ");
@@ -58,7 +59,8 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
         }
 
         // Status
-        switch (item.getStatus()) {
+        String status = item.getStatus() != null ? item.getStatus() : "OPEN";
+        switch (status) {
             case "CLAIMED":
                 holder.statusChip.setText("🟡 RÉCLAMÉ");
                 break;
@@ -69,11 +71,6 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
                 holder.statusChip.setText("🟢 OUVERT");
                 break;
         }
-
-        // Photo (placeholder pour l'instant)
-        if (item.getPhotoPath() != null && !item.getPhotoPath().isEmpty()) {
-            // TODO: Charger l'image
-        }
     }
 
     @Override
@@ -83,13 +80,13 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
 
     public void filter(String text) {
         items.clear();
-        if (text.isEmpty()) {
+        if (text == null || text.isEmpty()) {
             items.addAll(itemsFull);
         } else {
             String lowerCase = text.toLowerCase();
             for (LostItem item : itemsFull) {
-                if (item.getTitle().toLowerCase().contains(lowerCase) ||
-                        item.getDescription().toLowerCase().contains(lowerCase)) {
+                if ((item.getTitle() != null && item.getTitle().toLowerCase().contains(lowerCase)) ||
+                    (item.getDescription() != null && item.getDescription().toLowerCase().contains(lowerCase))) {
                     items.add(item);
                 }
             }
