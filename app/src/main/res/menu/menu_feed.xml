@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Feed ActionBar menu — owned by Omar, integrated by Idriss in ItemFeedActivity.
+
+    Integration guide for Idriss:
+      1. In ItemFeedActivity, override onCreateOptionsMenu:
+             getMenuInflater().inflate(R.menu.menu_feed, menu); return true;
+      2. Override onOptionsItemSelected and handle each id below.
+      3. Filter ids: filter_all / filter_lost / filter_found → re-query RealmHelper
+      4. Sort ids: sort_newest / sort_oldest → sort RealmResults by timestamp
+      5. my_reports id → startActivity(new Intent(this, MyPostsActivity.class))
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Filter submenu: single-choice (All / Lost / Found) -->
+    <item
+        android:id="@+id/menu_filter"
+        android:title="@string/menu_filter">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/filter_all"
+                    android:title="@string/filter_all"
+                    android:checked="true" />
+                <item
+                    android:id="@+id/filter_lost"
+                    android:title="@string/filter_lost" />
+                <item
+                    android:id="@+id/filter_found"
+                    android:title="@string/filter_found" />
+            </group>
+        </menu>
+    </item>
+
+    <!-- Sort submenu: single-choice (Newest / Oldest) -->
+    <item
+        android:id="@+id/menu_sort"
+        android:title="@string/menu_sort">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sort_newest"
+                    android:title="@string/sort_newest"
+                    android:checked="true" />
+                <item
+                    android:id="@+id/sort_oldest"
+                    android:title="@string/sort_oldest" />
+            </group>
+        </menu>
+    </item>
+
+    <!-- My Reports: overflow only -->
+    <item
+        android:id="@+id/menu_my_reports"
+        android:title="@string/menu_my_reports"
+        android:showAsAction="never" />
+
+</menu>

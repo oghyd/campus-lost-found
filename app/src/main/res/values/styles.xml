@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        Status chip styles — seeded by Omar, consumed by ItemFeedAdapter (Idriss)
+        and ItemDetailFragment (Mona).
+        Base chip colour is overridden per-status; text is always white.
+    -->
+    <style name="StatusChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+    <style name="StatusChip.Open">
+        <!-- OPEN → green #22C55E (matches StatusUtils.getChipColor) -->
+        <item name="chipBackgroundColor">#22C55E</item>
+    </style>
+
+    <style name="StatusChip.Claimed">
+        <!-- CLAIMED → amber #F59E0B -->
+        <item name="chipBackgroundColor">#F59E0B</item>
+    </style>
+
+    <style name="StatusChip.Returned">
+        <!-- RETURNED → slate #94A3B8 -->
+        <item name="chipBackgroundColor">#94A3B8</item>
+    </style>
+
+</resources>

@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Added by Omar (Phase 1) -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />       <!-- API 33+ -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />        <!-- API 33+ -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />                                               <!-- below API 33 -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />     <!-- AlarmManager -->
 
     <application
         android:allowBackup="true"
@@ -16,14 +18,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusLostFound">
 
+        <!-- ── Omar ─────────────────────────────────────────────────── -->
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ── Idriss ────────────────────────────────────────────────── -->
+        <activity android:name=".ItemFeedActivity"  android:exported="false" />
+        <activity android:name=".MyPostsActivity"   android:exported="false" />
+
+        <!-- ── Ines ──────────────────────────────────────────────────── -->
+        <activity android:name=".PostItemActivity"  android:exported="false" />
+
+        <!-- ── Mona ──────────────────────────────────────────────────── -->
+        <activity android:name=".ItemDetailActivity" android:exported="false" />
+
+        <!-- Registered by Mona -->
+        <receiver android:name=".ClaimNotificationReceiver" android:exported="false" />
+
+        <!-- Registered by Ines — FileProvider for camera photos -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
     </application>
 

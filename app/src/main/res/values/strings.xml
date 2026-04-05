@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">CampusLostFound</string>
+
+    <!-- Login screen -->
+    <string name="login_title">Campus Lost &amp; Found</string>
+    <string name="login_subtitle">UIR — Report or recover lost items on campus</string>
+    <string name="hint_student_id">Student ID</string>
+    <string name="hint_name">Full Name</string>
+    <string name="btn_login">Sign In</string>
+    <string name="error_student_id_required">Student ID is required</string>
+    <string name="error_name_required">Name is required</string>
+
+    <!-- Feed menu -->
+    <string name="menu_filter">Filter</string>
+    <string name="menu_sort">Sort</string>
+    <string name="menu_my_reports">My Reports</string>
+    <string name="filter_all">All</string>
+    <string name="filter_lost">Lost</string>
+    <string name="filter_found">Found</string>
+    <string name="sort_newest">Newest first</string>
+    <string name="sort_oldest">Oldest first</string>
 </resources>
