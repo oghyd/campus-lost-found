@@ -18,7 +18,11 @@
         android:theme="@style/Theme.CampusLostFound">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ItemFeedActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +30,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ItemFeedActivity" />
-        <activity android:name=".MyPostsActivity" />
+        <!-- <activity android:name=".MyPostsActivity" /> -->
 
     </application>
 
