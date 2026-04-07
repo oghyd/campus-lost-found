@@ -70,7 +70,13 @@ public class PostItemActivity extends AppCompatActivity {
         setupCategorySpinner();
         setupDatePicker();
         setupSubmitButton();
-
+        String editItemId = getIntent().getStringExtra("ITEM_ID");
+        if (editItemId != null) {
+            prefillFormForEdit(editItemId);
+            btnSubmit.setText("Save Changes");
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle("Edit Item");
+        }
         // Phase 4: camera — wired in Phase 4
         btnAttachPhoto.setOnClickListener(v -> openCamera());
     }
@@ -175,7 +181,7 @@ public class PostItemActivity extends AppCompatActivity {
             item.setStatus("OPEN");
             item.setTimestamp(selectedDateMillis);
             item.setOwnerStudentId(session.getStudentId());
-            item.setOwnerName(session.getUserName());
+            item.setOwnerName(session.getName());
             item.setPhotoPath(selectedPhotoPath); // null if no photo
 
             // Save to Realm
@@ -185,13 +191,7 @@ public class PostItemActivity extends AppCompatActivity {
             finish(); // go back to feed
         });
     }
-    String editItemId = getIntent().getStringExtra("ITEM_ID");
-    if (editItemId != null) {
-        prefillFormForEdit(editItemId);
-        btnSubmit.setText("Save Changes");
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle("Edit Item");
-    }
+
     private void prefillFormForEdit(String itemId) {
         LostItem item = RealmHelper.getInstance().getItemById(itemId);
         if (item == null) return;
