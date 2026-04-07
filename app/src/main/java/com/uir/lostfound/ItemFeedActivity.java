@@ -11,6 +11,12 @@ import com.uir.lostfound.db.RealmHelper;
 import com.uir.lostfound.model.LostItem;
 import com.uir.lostfound.utils.SessionManager;
 
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
+import androidx.appcompat.widget.Toolbar;
+import com.uir.lostfound.utils.SessionManager;
+
 import io.realm.RealmResults;
 
 /**
@@ -70,6 +76,54 @@ public class ItemFeedActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.feed_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.action_filter_lost) {
+            Toast.makeText(this, "Filter LOST selected", Toast.LENGTH_SHORT).show();
+            // Idriss can connect this to actual Realm/adapter filtering
+            return true;
+        }
+
+        if (itemId == R.id.action_filter_found) {
+            Toast.makeText(this, "Filter FOUND selected", Toast.LENGTH_SHORT).show();
+            // Idriss can connect this to actual Realm/adapter filtering
+            return true;
+        }
+
+        if (itemId == R.id.action_filter_all) {
+            Toast.makeText(this, "Show ALL selected", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (itemId == R.id.action_sort_date) {
+            Toast.makeText(this, "Sort by date selected", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (itemId == R.id.action_my_reports) {
+            Intent intent = new Intent(ItemFeedActivity.this, MyPostsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (itemId == R.id.action_logout) {
+            sessionManager.clearUser();
+            redirectToLogin();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onDestroy() {

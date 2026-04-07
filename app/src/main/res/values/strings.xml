@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CampusLostFound</string>
+
+    <string name="menu_show_lost">Show Lost</string>
+    <string name="menu_show_found">Show Found</string>
+    <string name="menu_show_all">Show All</string>
+    <string name="menu_sort_date">Sort by Date</string>
+    <string name="menu_my_reports">My Reports</string>
+    <string name="menu_logout">Logout</string>
 </resources>
