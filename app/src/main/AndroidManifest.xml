@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MyApplication"
@@ -20,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusLostFound">
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.uir.lostfound.fileprovider"
@@ -29,10 +32,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity
-            android:name=".ItemFeedActivity"
-            android:exported="true">
-        </activity>
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -42,7 +42,22 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ItemFeedActivity"
+            android:exported="true" />
+
+        <!-- Mona -->
+        <activity
+            android:name=".ItemDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".ItemFeedActivity" />
+
+        <receiver
+            android:name=".ClaimNotificationReceiver"
+            android:exported="false" />
+
         <!-- <activity android:name=".MyPostsActivity" /> -->
+        <!-- <activity android:name=".PostItemActivity" /> -->
 
     </application>
 
