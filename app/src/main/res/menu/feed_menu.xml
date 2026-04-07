@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Feed menu for ItemFeedActivity.
+
+    Omar ownership:
+    - global ActionBar menu
+    - navigation/menu shell
+
+    Idriss will later connect menu actions to actual filter/sort logic if needed.
+-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Filter by LOST items -->
+    <item
+        android:id="@+id/action_filter_lost"
+        android:title="@string/menu_show_lost"
+        app:showAsAction="never" />
+
+    <!-- Filter by FOUND items -->
+    <item
+        android:id="@+id/action_filter_found"
+        android:title="@string/menu_show_found"
+        app:showAsAction="never" />
+
+    <!-- Show all items -->
+    <item
+        android:id="@+id/action_filter_all"
+        android:title="@string/menu_show_all"
+        app:showAsAction="never" />
+
+    <!-- Sort items by most recent -->
+    <item
+        android:id="@+id/action_sort_date"
+        android:title="@string/menu_sort_date"
+        app:showAsAction="never" />
+
+    <!-- Navigate to the current user's posts -->
+    <item
+        android:id="@+id/action_my_reports"
+        android:title="@string/menu_my_reports"
+        app:showAsAction="never" />
+
+    <!-- Optional logout shortcut -->
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/menu_logout"
+        app:showAsAction="never" />
+</menu>
