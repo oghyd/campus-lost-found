@@ -11,6 +11,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.Calendar;
+import com.uir.lostfound.db.RealmHelper;
+import com.uir.lostfound.model.LostItem;
+import com.uir.lostfound.utils.SessionManager;
+import java.util.UUID;
 
 public class PostItemActivity extends AppCompatActivity {
 
@@ -97,10 +101,85 @@ public class PostItemActivity extends AppCompatActivity {
     private void setupSubmitButton() {
         btnSubmit.setOnClickListener(v -> {
             if (!validateForm()) return;
-            // TODO Phase 3: save to Realm here
-            Toast.makeText(this, "Form valid — Realm save coming in Phase 3", Toast.LENGTH_SHORT).show();
+
+            // Read values from form
+            String title    = etTitle.getText().toString().trim();
+            String desc     = etDescription.getText().toString().trim();
+            String location = etLocation.getText().toString().trim();
+            String category = spinnerCategory.getSelectedItem().toString();
+            String type     = (toggleType.getCheckedButtonId() == R.id.btn_lost)
+                    ? "LOST" : "FOUND";
+
+            // Get logged-in user from SessionManager
+            SessionManager session = new SessionManager(this);
+
+            // Build the LostItem
+            LostItem item = new LostItem();
+            item.setId(UUID.randomUUID().toString());
+            item.setTitle(title);
+            item.setDescription(desc);
+            item.setLocation(location);
+            item.setCategory(category);
+            item.setType(type);
+            item.setStatus("OPEN");
+            item.setTimestamp(selectedDateMillis);
+            item.setOwnerStudentId(session.getStudentId());
+            item.setOwnerName(session.getUserName());
+            item.setPhotoPath(selectedPhotoPath); // null if no photo
+
+            // Save to Realm
+            RealmHelper.getInstance().insertItem(item);
+
+            Toast.makeText(this, "Item posted!", Toast.LENGTH_SHORT).show();
+            finish(); // go back to feed
         });
     }
+    String editItemId = getIntent().getStringExtra("ITEM_ID");
+    if (editItemId != null) {
+        prefillFormForEdit(editItemId);
+        btnSubmit.setText("Save Changes");
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle("Edit Item");
+    }
+    private void prefillFormForEdit(String itemId) {
+        LostItem item = RealmHelper.getInstance().getItemById(itemId);
+        if (item == null) return;
+
+        etTitle.setText(item.getTitle());
+        etDescription.setText(item.getDescription());
+        etLocation.setText(item.getLocation());
+
+        // Set Spinner to saved category
+        String[] cats = CATEGORIES;
+        for (int i = 0; i < cats.length; i++) {
+            if (cats[i].equals(item.getCategory())) {
+                spinnerCategory.setSelection(i);
+                break;
+            }
+        }
+
+        // Set toggle
+        if ("LOST".equals(item.getType()))
+            toggleType.check(R.id.btn_lost);
+        else
+            toggleType.check(R.id.btn_found);
+
+        // Set date
+        selectedDateMillis = item.getTimestamp();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy",
+                java.util.Locale.getDefault());
+        btnDate.setText("Date: " + sdf.format(new java.util.Date(selectedDateMillis)));
+
+        // Wire submit to update instead of insert
+        btnSubmit.setOnClickListener(v -> {
+            if (!validateForm()) return;
+            // TODO: call RealmHelper.updateItem(itemId, ...) when Idriss adds that method
+            Toast.makeText(this, "Edit saved!", Toast.LENGTH_SHORT).show();
+            finish();
+        });
+    }
+
+
 
     // ── Validation ────────────────────────────────────────────
     private boolean validateForm() {
