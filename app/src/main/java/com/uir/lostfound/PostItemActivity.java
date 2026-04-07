@@ -15,6 +15,15 @@ import com.uir.lostfound.db.RealmHelper;
 import com.uir.lostfound.model.LostItem;
 import com.uir.lostfound.utils.SessionManager;
 import java.util.UUID;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import androidx.core.content.FileProvider;
+import com.uir.lostfound.utils.ImageHelper;
+import java.io.File;
+import java.io.IOException;
+
 
 public class PostItemActivity extends AppCompatActivity {
 
@@ -24,6 +33,8 @@ public class PostItemActivity extends AppCompatActivity {
     private MaterialButtonToggleGroup toggleType;
     private MaterialButton btnDate, btnSubmit, btnAttachPhoto;
     private android.widget.ImageView ivPhotoPreview;
+    private static final int REQUEST_IMAGE_CAPTURE = 101;
+    private Uri photoUri; // URI for the camera intent
 
     // State
     private long selectedDateMillis = 0;
@@ -61,10 +72,50 @@ public class PostItemActivity extends AppCompatActivity {
         setupSubmitButton();
 
         // Phase 4: camera — wired in Phase 4
-        btnAttachPhoto.setOnClickListener(v ->
-                Toast.makeText(this, "Camera coming in Phase 4", Toast.LENGTH_SHORT).show()
-        );
+        btnAttachPhoto.setOnClickListener(v -> openCamera());
     }
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) == null) {
+            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            File photoFile = ImageHelper.createImageFile(this);
+            photoUri = FileProvider.getUriForFile(
+                    this,
+                    "com.uir.lostfound.fileprovider",
+                    photoFile
+            );
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Could not create image file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Load the full-size photo from the URI
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), photoUri);
+                // Save to internal storage and get path
+                selectedPhotoPath = ImageHelper.saveImageToInternalStorage(this, bitmap);
+                // Show preview
+                ivPhotoPreview.setImageBitmap(bitmap);
+                ivPhotoPreview.setVisibility(android.view.View.VISIBLE);
+                btnAttachPhoto.setText("Change Photo");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to load photo", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     // ── Spinner ──────────────────────────────────────────────
     private void setupCategorySpinner() {
