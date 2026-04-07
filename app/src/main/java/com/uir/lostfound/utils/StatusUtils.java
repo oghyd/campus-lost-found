@@ -1,5 +1,9 @@
 package com.uir.lostfound.utils;
 
+import androidx.core.content.ContextCompat;
+
+import android.content.Context;
+
 import com.uir.lostfound.R;
 
 /**
@@ -14,39 +18,19 @@ import com.uir.lostfound.R;
  */
 public class StatusUtils {
 
-    // Status constants used for LostItem.status
+    // Allowed LostItem status values
     public static final String STATUS_OPEN = "OPEN";
     public static final String STATUS_CLAIMED = "CLAIMED";
     public static final String STATUS_RETURNED = "RETURNED";
 
-    /**
-     * Returns the color resource associated with a given item status.
-     *
-     * OPEN      -> green
-     * CLAIMED   -> amber/orange
-     * RETURNED  -> gray
-     *
-     * @param status current item status
-     * @return color resource ID
-     */
-    public static int getChipColorRes(String status) {
-        if (STATUS_OPEN.equals(status)) {
-            return R.color.status_open;
-        } else if (STATUS_CLAIMED.equals(status)) {
-            return R.color.status_claimed;
-        } else if (STATUS_RETURNED.equals(status)) {
-            return R.color.status_returned;
-        } else {
-            // Fallback color if status is null or unexpected
-            return R.color.status_unknown;
-        }
+    private StatusUtils() {
     }
 
     /**
-     * Optional helper to validate whether a status is one of the allowed values.
+     * Checks whether a given status is valid.
      *
      * @param status input status
-     * @return true if valid, false otherwise
+     * @return true if status is OPEN, CLAIMED, or RETURNED
      */
     public static boolean isValidStatus(String status) {
         return STATUS_OPEN.equals(status)
@@ -55,11 +39,11 @@ public class StatusUtils {
     }
 
     /**
-     * Optional fallback helper.
-     * If a status is null or invalid, return OPEN as safe default.
+     * Returns a safe status value.
+     * If the input is null or invalid, OPEN is used as fallback.
      *
      * @param status input status
-     * @return valid status string
+     * @return normalized valid status
      */
     public static String normalizeStatus(String status) {
         if (isValidStatus(status)) {
@@ -68,7 +52,96 @@ public class StatusUtils {
         return STATUS_OPEN;
     }
 
-    // Private constructor to prevent instantiation
-    private StatusUtils() {
+    /**
+     * Returns the display text shown in the UI chip.
+     *
+     * @param status item status
+     * @return formatted user-facing label
+     */
+    public static String getDisplayLabel(String status) {
+        String normalizedStatus = normalizeStatus(status);
+
+        switch (normalizedStatus) {
+            case STATUS_OPEN:
+                return "OPEN";
+            case STATUS_CLAIMED:
+                return "CLAIMED";
+            case STATUS_RETURNED:
+                return "RETURNED";
+            default:
+                return "OPEN";
+        }
+    }
+
+    /**
+     * Returns the background color resource for the chip.
+     *
+     * @param status item status
+     * @return color resource id
+     */
+    public static int getChipColorRes(String status) {
+        String normalizedStatus = normalizeStatus(status);
+
+        switch (normalizedStatus) {
+            case STATUS_OPEN:
+                return R.color.status_open;
+            case STATUS_CLAIMED:
+                return R.color.status_claimed;
+            case STATUS_RETURNED:
+                return R.color.status_returned;
+            default:
+                return R.color.status_unknown;
+        }
+    }
+
+    /**
+     * Returns the text color resource for the chip text.
+     * @param status item status
+     * @return color resource id
+     */
+    public static int getChipTextColorRes(String status) {
+        return android.R.color.white;
+    }
+
+    /**
+     * Convenience helper that resolves chip background color to a real color int.
+     *
+     * @param context Android context
+     * @param status item status
+     * @return resolved color int
+     */
+    public static int getChipBackgroundColor(Context context, String status) {
+        return ContextCompat.getColor(context, getChipColorRes(status));
+    }
+
+    /**
+     * Convenience helper that resolves chip text color to a real color int.
+     *
+     * @param context Android context
+     * @param status item status
+     * @return resolved color int
+     */
+    public static int getChipTextColor(Context context, String status) {
+        return ContextCompat.getColor(context, getChipTextColorRes(status));
+    }
+
+    /**
+     * Returns true if an item can move from OPEN to CLAIMED.
+     *
+     * @param currentStatus current item status
+     * @return true if transition is allowed
+     */
+    public static boolean canMarkClaimed(String currentStatus) {
+        return STATUS_OPEN.equals(normalizeStatus(currentStatus));
+    }
+
+    /**
+     * Returns true if an item can move from CLAIMED to RETURNED.
+     *
+     * @param currentStatus current item status
+     * @return true if transition is allowed
+     */
+    public static boolean canMarkReturned(String currentStatus) {
+        return STATUS_CLAIMED.equals(normalizeStatus(currentStatus));
     }
 }

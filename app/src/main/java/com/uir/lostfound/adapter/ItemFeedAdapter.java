@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import io.realm.RealmResults;
-
+import com.uir.lostfound.utils.StatusUtils;
 public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHolder> {
 
     private Context context;
@@ -59,18 +59,19 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
         }
 
         // Status
-        String status = item.getStatus() != null ? item.getStatus() : "OPEN";
-        switch (status) {
-            case "CLAIMED":
-                holder.statusChip.setText("🟡 RÉCLAMÉ");
-                break;
-            case "RETURNED":
-                holder.statusChip.setText("✅ RESTITUÉ");
-                break;
-            default:
-                holder.statusChip.setText("🟢 OUVERT");
-                break;
-        }
+        // Status (Omar's centralized status system)
+        String status = item.getStatus();
+
+        // Set chip text using StatusUtils
+        holder.statusChip.setText(StatusUtils.getDisplayLabel(status));
+
+        // Set chip text color
+        holder.statusChip.setTextColor(StatusUtils.getChipTextColor(context, status));
+
+        // Preferred: tint existing rounded chip background
+        holder.statusChip.getBackground().setTint(
+                StatusUtils.getChipBackgroundColor(context, status)
+        );
     }
 
     @Override
