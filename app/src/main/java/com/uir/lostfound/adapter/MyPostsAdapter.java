@@ -13,7 +13,7 @@ import com.uir.lostfound.model.LostItem;
 import java.util.ArrayList;
 import java.util.List;
 import io.realm.RealmResults;
-
+import com.uir.lostfound.utils.StatusUtils;
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder> {
 
     private Context context;
@@ -56,16 +56,17 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
         }
 
         // Status
-        switch (item.getStatus()) {
-            case "CLAIMED":
-                holder.statusChip.setText("🟡 RÉCLAMÉ");
-                break;
-            case "RETURNED":
-                holder.statusChip.setText("✅ RESTITUÉ");
-                break;
-            default:
-                holder.statusChip.setText("🟢 OUVERT");
-                break;
+        // Status (using Omar's centralized helper)
+        String status = item.getStatus();
+
+        holder.statusChip.setText(StatusUtils.getDisplayLabel(status));
+        holder.statusChip.setTextColor(StatusUtils.getChipTextColor(context, status));
+
+        // If statusChip already has a drawable background, tint it
+        if (holder.statusChip.getBackground() != null) {
+            holder.statusChip.getBackground().setTint(
+                    StatusUtils.getChipBackgroundColor(context, status)
+            );
         }
 
         // Boutons
