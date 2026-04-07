@@ -144,4 +144,13 @@ public class StatusUtils {
     public static boolean canMarkReturned(String currentStatus) {
         return STATUS_CLAIMED.equals(normalizeStatus(currentStatus));
     }
+    public static int getChipColor(String status) {
+        if (status == null) return 0xFF757575;
+        switch (status) {
+            case "OPEN":     return 0xFF43A047; // vert
+            case "CLAIMED":  return 0xFFFB8C00; // orange
+            case "RETURNED": return 0xFF757575; // gris
+            default:         return 0xFF757575;
+        }
+    }
 }
