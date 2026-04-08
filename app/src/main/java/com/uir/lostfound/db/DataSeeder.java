@@ -12,7 +12,7 @@ public class DataSeeder {
 
         // ── 3 Students ──
         String[][] users = {
-                {"STU001", "Omar Ghiyati"},
+                {"STU001", "Hasnae Ghiyati"},
                 {"STU002", "Fatima Zahra"},
                 {"STU003", "Youssef Benali"}
         };

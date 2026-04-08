@@ -13,4 +13,9 @@
     <string name="status_returned">RETURNED</string>
     <string name="status_transition_error_claimed">Only OPEN items can be marked as CLAIMED</string>
     <string name="status_transition_error_returned">Only CLAIMED items can be marked as RETURNED</string>
+
+    <string name="error_student_id_required">Student ID is required</string>
+    <string name="error_name_required">Name is required</string>
+    <string name="error_invalid_credentials">Invalid student ID or name</string>
+    <string name="login_successful">Login successful</string>
 </resources>

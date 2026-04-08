@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.uir.lostfound.utils.SessionManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * LoginActivity is the app entry screen.
  * - ask the user for student ID and name
@@ -31,6 +34,14 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
 
     private SessionManager sessionManager;
+
+    /** Registered users: student ID → full name. */
+    private static final Map<String, String> VALID_USERS = new HashMap<>();
+    static {
+        VALID_USERS.put("STU001", "Hasnae Ghiyati");
+        VALID_USERS.put("STU002", "Fatima Zahra");
+        VALID_USERS.put("STU003", "Youssef Benali");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,27 +76,33 @@ public class LoginActivity extends AppCompatActivity {
         boolean hasError = false;
 
         if (TextUtils.isEmpty(studentId)) {
-            etStudentId.setError("Student ID is required");
+            etStudentId.setError(getString(R.string.error_student_id_required));
             hasError = true;
         }
 
         if (TextUtils.isEmpty(name)) {
-            etName.setError("Name is required");
+            etName.setError(getString(R.string.error_name_required));
             hasError = true;
         }
 
         if (hasError) {
-            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate credentials against registered users
+        String expectedName = VALID_USERS.get(studentId);
+        if (expectedName == null || !expectedName.equalsIgnoreCase(name)) {
+            Toast.makeText(this, getString(R.string.error_invalid_credentials), Toast.LENGTH_SHORT).show();
+            etStudentId.setError(getString(R.string.error_invalid_credentials));
+            etName.setError(getString(R.string.error_invalid_credentials));
             return;
         }
 
         // Save user data locally
-        sessionManager.saveUser(studentId, name);
+        sessionManager.saveUser(studentId, expectedName);
 
-        // Show success message
-        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show();
 
-        // Move to next screen
         goToItemFeed();
     }
 
