@@ -89,8 +89,14 @@ public class ItemDetailActivity extends AppCompatActivity {
             btnConfirmReturned.setVisibility(View.VISIBLE);
         }
 
-        btnClaim.setOnClickListener(v -> showClaimDialog());
-        btnConfirmReturned.setOnClickListener(v -> confirmReturned());
+        btnClaim.setOnClickListener(v -> {
+            btnClaim.setEnabled(false);
+            showClaimDialog();
+        });
+        btnConfirmReturned.setOnClickListener(v -> {
+            btnConfirmReturned.setEnabled(false);
+            confirmReturned();
+        });
     }
 
     // Dialog : confirmer le claim
@@ -106,7 +112,8 @@ public class ItemDetailActivity extends AppCompatActivity {
                     btnClaim.setVisibility(View.GONE);
                     recreate(); // Recharge l'Activity pour rafraîchir l'UI
                 })
-                .setNegativeButton("Annuler", null)
+                .setNegativeButton("Annuler", (dialog, which) -> btnClaim.setEnabled(true))
+                .setOnCancelListener(dialog -> btnClaim.setEnabled(true))
                 .show();
     }
 
@@ -121,7 +128,8 @@ public class ItemDetailActivity extends AppCompatActivity {
                     btnConfirmReturned.setVisibility(View.GONE);
                     recreate();
                 })
-                .setNegativeButton("Annuler", null)
+                .setNegativeButton("Annuler", (dialog, which) -> btnConfirmReturned.setEnabled(true))
+                .setOnCancelListener(dialog -> btnConfirmReturned.setEnabled(true))
                 .show();
     }
 

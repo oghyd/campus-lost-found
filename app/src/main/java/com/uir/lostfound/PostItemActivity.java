@@ -15,10 +15,14 @@ import com.uir.lostfound.db.RealmHelper;
 import com.uir.lostfound.model.LostItem;
 import com.uir.lostfound.utils.SessionManager;
 import java.util.UUID;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import com.uir.lostfound.utils.ImageHelper;
 import java.io.File;
@@ -34,7 +38,8 @@ public class PostItemActivity extends AppCompatActivity {
     private MaterialButton btnDate, btnSubmit, btnAttachPhoto;
     private android.widget.ImageView ivPhotoPreview;
     private static final int REQUEST_IMAGE_CAPTURE = 101;
-    private Uri photoUri; // URI for the camera intent
+    private static final int REQUEST_CAMERA_PERMISSION = 102;
+    private Uri photoUri;
 
     // State
     private long selectedDateMillis = 0;
@@ -81,11 +86,16 @@ public class PostItemActivity extends AppCompatActivity {
         btnAttachPhoto.setOnClickListener(v -> openCamera());
     }
     private void openCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) == null) {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
             return;
         }
+        launchCameraIntent();
+    }
+
+    private void launchCameraIntent() {
         try {
             File photoFile = ImageHelper.createImageFile(this);
             photoUri = FileProvider.getUriForFile(
@@ -93,11 +103,24 @@ public class PostItemActivity extends AppCompatActivity {
                     "com.uir.lostfound.fileprovider",
                     photoFile
             );
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Could not create image file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                launchCameraIntent();
+            } else {
+                Toast.makeText(this, "Camera permission is required to take photos", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -221,11 +244,44 @@ public class PostItemActivity extends AppCompatActivity {
                 java.util.Locale.getDefault());
         btnDate.setText("Date: " + sdf.format(new java.util.Date(selectedDateMillis)));
 
+        // Load existing photo if any
+        if (item.getPhotoPath() != null) {
+            selectedPhotoPath = item.getPhotoPath();
+            try {
+                android.graphics.BitmapFactory.Options opts = new android.graphics.BitmapFactory.Options();
+                opts.inSampleSize = 2;
+                android.graphics.Bitmap bmp = android.graphics.BitmapFactory.decodeFile(item.getPhotoPath(), opts);
+                if (bmp != null) {
+                    ivPhotoPreview.setImageBitmap(bmp);
+                    ivPhotoPreview.setVisibility(View.VISIBLE);
+                    btnAttachPhoto.setText(R.string.change_photo);
+                }
+            } catch (Exception ignored) {}
+        }
+
         // Wire submit to update instead of insert
         btnSubmit.setOnClickListener(v -> {
             if (!validateForm()) return;
-            // TODO: call RealmHelper.updateItem(itemId, ...) when Idriss adds that method
-            Toast.makeText(this, "Edit saved!", Toast.LENGTH_SHORT).show();
+
+            String title    = etTitle.getText().toString().trim();
+            String desc     = etDescription.getText().toString().trim();
+            String location = etLocation.getText().toString().trim();
+            String category = spinnerCategory.getSelectedItem().toString();
+            String type     = (toggleType.getCheckedButtonId() == R.id.btn_lost)
+                    ? "LOST" : "FOUND";
+
+            LostItem updated = new LostItem();
+            updated.setTitle(title);
+            updated.setDescription(desc);
+            updated.setLocation(location);
+            updated.setCategory(category);
+            updated.setType(type);
+            updated.setTimestamp(selectedDateMillis);
+            updated.setPhotoPath(selectedPhotoPath);
+
+            RealmHelper.getInstance().updateItem(itemId, updated);
+
+            Toast.makeText(this, R.string.edit_saved, Toast.LENGTH_SHORT).show();
             finish();
         });
     }
