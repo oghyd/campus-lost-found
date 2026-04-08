@@ -21,7 +21,8 @@
         android:background="?attr/colorPrimary"
         android:title="Campus Lost &amp; Found"
         android:titleTextColor="@android:color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <SearchView
         android:id="@+id/searchView"
