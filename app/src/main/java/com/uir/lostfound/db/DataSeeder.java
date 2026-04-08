@@ -10,31 +10,25 @@ public class DataSeeder {
             return;
         }
 
-        // ── 3 Students + 1 Admin ──
-        // Admin:   ADM001 / Admin Campus
-        // Student: STU001 / Omar Ghiyati
-        // Student: STU002 / Fatima Zahra
-        // Student: STU003 / Youssef Benali
-
+        // ── 3 Students ──
         String[][] users = {
-            {"ADM001", "Admin Campus"},
-            {"STU001", "Omar Ghiyati"},
-            {"STU002", "Fatima Zahra"},
-            {"STU003", "Youssef Benali"}
+                {"STU001", "Omar Ghiyati"},
+                {"STU002", "Fatima Zahra"},
+                {"STU003", "Youssef Benali"}
         };
 
         // ── 10 Lost/Found Items ──
         Object[][] items = {
-            {"MacBook Pro 14\"",       "Silver laptop left in lecture hall",         "Amphi A",                "Electronics", "LOST",  "OPEN",     1},
-            {"Student ID Card",        "UIR card found near cafeteria entrance",    "Cafeteria",              "Documents",   "FOUND", "OPEN",     2},
-            {"Black Backpack",         "JanSport bag with notebooks inside",        "Library, 2nd floor",     "Bags",        "LOST",  "OPEN",     3},
-            {"Car Keys (Toyota)",      "Set of 3 keys with red keychain",           "Parking B",              "Keys",        "LOST",  "CLAIMED",  1},
-            {"Blue Hoodie",            "Nike hoodie size M, left after gym class",  "Sports Complex",         "Clothing",    "LOST",  "OPEN",     2},
-            {"AirPods Pro Case",       "White case found on bench outside block C", "Block C entrance",       "Electronics", "FOUND", "OPEN",     3},
-            {"Calculus Textbook",      "Stewart Calculus 8th edition",              "Room 204, Block A",      "Documents",   "LOST",  "RETURNED", 1},
-            {"USB Flash Drive 64GB",   "SanDisk silver, has sticker on it",         "Computer Lab 3",         "Electronics", "FOUND", "OPEN",     2},
-            {"Prescription Glasses",   "Ray-Ban frames, brown case",               "Amphi B",                "Other",       "LOST",  "CLAIMED",  3},
-            {"Wallet (Brown Leather)", "Contains bus pass, no cash",               "Student Lounge, Block D", "Other",       "LOST",  "OPEN",     1}
+                {"MacBook Pro 14\"",       "Silver laptop left in lecture hall",         "Amphi A",                "Electronics", "LOST",  "OPEN",     0},
+                {"Student ID Card",        "UIR card found near cafeteria entrance",    "Cafeteria",              "Documents",   "FOUND", "OPEN",     1},
+                {"Black Backpack",         "JanSport bag with notebooks inside",        "Library, 2nd floor",     "Bags",        "LOST",  "OPEN",     2},
+                {"Car Keys (Toyota)",      "Set of 3 keys with red keychain",           "Parking B",              "Keys",        "LOST",  "CLAIMED",  0},
+                {"Blue Hoodie",            "Nike hoodie size M, left after gym class",  "Sports Complex",         "Clothing",    "LOST",  "OPEN",     1},
+                {"AirPods Pro Case",       "White case found on bench outside block C", "Block C entrance",       "Electronics", "FOUND", "OPEN",     2},
+                {"Calculus Textbook",      "Stewart Calculus 8th edition",              "Room 204, Block A",      "Documents",   "LOST",  "RETURNED", 0},
+                {"USB Flash Drive 64GB",   "SanDisk silver, has sticker on it",         "Computer Lab 3",         "Electronics", "FOUND", "OPEN",     1},
+                {"Prescription Glasses",   "Ray-Ban frames, brown case",               "Amphi B",                "Other",       "LOST",  "CLAIMED",  2},
+                {"Wallet (Brown Leather)", "Contains bus pass, no cash",               "Student Lounge, Block D", "Other",       "LOST",  "OPEN",     0}
         };
 
         long now = System.currentTimeMillis();
