@@ -2,6 +2,9 @@ package com.uir.lostfound;
 
 import android.app.Application;
 
+import com.uir.lostfound.db.DataSeeder;
+import com.uir.lostfound.db.RealmHelper;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -16,5 +19,7 @@ public class MyApplication extends Application {
                 .allowWritesOnUiThread(true)
                 .build();
         Realm.setDefaultConfiguration(config);
+
+        DataSeeder.seedData(RealmHelper.getInstance());
     }
 }

@@ -78,5 +78,6 @@ public class RealmHelper {
         if (realm != null && !realm.isClosed()) {
             realm.close();
         }
+        instance = null;
     }
 }

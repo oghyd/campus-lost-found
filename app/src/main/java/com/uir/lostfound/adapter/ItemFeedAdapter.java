@@ -95,6 +95,27 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void filterByType(String type) {
+        items.clear();
+        if (type == null) {
+            items.addAll(itemsFull);
+        } else {
+            for (LostItem item : itemsFull) {
+                if (type.equals(item.getType())) {
+                    items.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void sortByDate(boolean newestFirst) {
+        java.util.Collections.sort(items, (a, b) ->
+                newestFirst ? Long.compare(b.getTimestamp(), a.getTimestamp())
+                            : Long.compare(a.getTimestamp(), b.getTimestamp()));
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, category, timestamp, typeChip, statusChip;
         ImageView thumbnail;
