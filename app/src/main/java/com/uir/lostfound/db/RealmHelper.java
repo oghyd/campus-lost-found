@@ -74,6 +74,25 @@ public class RealmHelper {
         });
     }
 
+    public void updateItem(String id, LostItem updated) {
+        realm.executeTransaction(r -> {
+            LostItem existing = r.where(LostItem.class)
+                    .equalTo("id", id)
+                    .findFirst();
+            if (existing != null) {
+                existing.setTitle(updated.getTitle());
+                existing.setDescription(updated.getDescription());
+                existing.setLocation(updated.getLocation());
+                existing.setCategory(updated.getCategory());
+                existing.setType(updated.getType());
+                existing.setTimestamp(updated.getTimestamp());
+                if (updated.getPhotoPath() != null) {
+                    existing.setPhotoPath(updated.getPhotoPath());
+                }
+            }
+        });
+    }
+
     public void close() {
         if (realm != null && !realm.isClosed()) {
             realm.close();
