@@ -22,6 +22,15 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
     private Context context;
     private List<LostItem> items;
     private List<LostItem> itemsFull;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(LostItem item);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public ItemFeedAdapter(Context context, RealmResults<LostItem> items) {
         this.context = context;
@@ -72,6 +81,11 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
         holder.statusChip.getBackground().setTint(
                 StatusUtils.getChipBackgroundColor(context, status)
         );
+
+        // Item click → detail
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(item);
+        });
     }
 
     @Override
@@ -114,6 +128,10 @@ public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHo
                 newestFirst ? Long.compare(b.getTimestamp(), a.getTimestamp())
                             : Long.compare(a.getTimestamp(), b.getTimestamp()));
         notifyDataSetChanged();
+    }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

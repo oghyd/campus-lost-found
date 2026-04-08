@@ -37,12 +37,6 @@
         android:title="@string/menu_sort_date"
         app:showAsAction="never" />
 
-    <!-- Navigate to the current user's posts -->
-    <item
-        android:id="@+id/action_my_reports"
-        android:title="@string/menu_my_reports"
-        app:showAsAction="never" />
-
     <!-- Optional logout shortcut -->
     <item
         android:id="@+id/action_logout"

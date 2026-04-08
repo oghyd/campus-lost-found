@@ -5,7 +5,6 @@
     <string name="menu_show_found">Show Found</string>
     <string name="menu_show_all">Show All</string>
     <string name="menu_sort_date">Sort by Date</string>
-    <string name="menu_my_reports">My Reports</string>
     <string name="menu_logout">Logout</string>
 
     <string name="status_open">OPEN</string>
@@ -18,4 +17,26 @@
     <string name="error_name_required">Name is required</string>
     <string name="error_invalid_credentials">Invalid student ID or name</string>
     <string name="login_successful">Login successful</string>
+
+    <!-- Empty states -->
+    <string name="empty_feed">No items found</string>
+    <string name="empty_my_posts">You haven\'t posted anything yet</string>
+
+    <!-- Dialogs -->
+    <string name="delete_confirm_title">Delete post</string>
+    <string name="delete_confirm_message">Delete this post permanently?</string>
+    <string name="delete_confirm_yes">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="post_deleted">Post deleted</string>
+
+    <!-- Post form -->
+    <string name="edit_saved">Changes saved!</string>
+    <string name="change_photo">Change Photo</string>
+    <string name="post_new_item">Post new item</string>
+
+    <!-- Feed -->
+    <string name="search_hint">Search items…</string>
+
+    <!-- My Posts -->
+    <string name="my_posts_title">My Posts</string>
 </resources>
