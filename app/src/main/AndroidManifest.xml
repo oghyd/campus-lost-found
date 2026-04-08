@@ -56,9 +56,11 @@
             android:name=".ClaimNotificationReceiver"
             android:exported="false" />
 
-        <!-- <activity android:name=".MyPostsActivity" /> -->
-        <!-- <activity android:name=".PostItemActivity" /> -->
-
+        <activity android:name=".MyPostsActivity"
+            android:parentActivityName=".ItemFeedActivity" />
+        <activity android:name=".PostItemActivity"
+            android:label="Post Item"
+            android:parentActivityName=".ItemFeedActivity" />
     </application>
 
 </manifest>

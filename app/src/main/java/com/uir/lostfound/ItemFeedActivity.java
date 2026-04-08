@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,6 +58,27 @@ public class ItemFeedActivity extends AppCompatActivity {
             RealmResults<LostItem> items = realmHelper.getAllItems();
             adapter = new ItemFeedAdapter(this, items);
             recyclerView.setAdapter(adapter);
+            findViewById(R.id.fab_add).setOnClickListener(v ->
+                    startActivity(new Intent(this, PostItemActivity.class))
+            );
+            adapter.setOnItemClickListener(item -> {
+                Intent intent = new Intent(this, ItemDetailActivity.class);
+                intent.putExtra("item_id", item.getId());
+                startActivity(intent);
+            });
+            SearchView searchView = findViewById(R.id.searchView);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    adapter.filter(query);
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.filter(newText);
+                    return true;
+                }
+            });
         } catch (Exception e) {
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
