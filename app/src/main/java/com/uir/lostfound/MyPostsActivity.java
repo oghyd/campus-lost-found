@@ -16,6 +16,18 @@ import com.uir.lostfound.model.LostItem;
 import com.uir.lostfound.utils.SessionManager;
 import io.realm.RealmResults;
 
+/**
+ * MyPostsActivity — lists only the items posted by the currently logged-in user.
+ *
+ * Queries Realm via {@link com.uir.lostfound.db.RealmHelper#getItemsByOwner(String)}
+ * using the student ID stored in {@link com.uir.lostfound.utils.SessionManager}.
+ *
+ * Each card exposes Edit and Delete actions:
+ * - Edit → opens PostItemActivity in edit mode (ITEM_ID + EDIT_MODE extras).
+ * - Delete → shows a confirmation dialog, then removes the item from Realm.
+ *
+ * Ownership: Idriss.
+ */
 public class MyPostsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -72,6 +84,7 @@ public class MyPostsActivity extends AppCompatActivity {
         });
     }
 
+    /** Queries Realm for this user's items and refreshes the RecyclerView (and empty state). */
     private void loadMyPosts() {
         RealmResults<LostItem> myItems = realmHelper.getItemsByOwner(currentStudentId);
         adapter = new MyPostsAdapter(this, myItems);

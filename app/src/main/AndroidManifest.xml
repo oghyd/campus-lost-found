@@ -48,6 +48,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Main feed — exported=true so it can be reached from MainActivity redirect -->
         <activity
             android:name=".ItemFeedActivity"
             android:exported="true" />
@@ -62,10 +63,12 @@
             android:name=".ClaimNotificationReceiver"
             android:exported="false" />
 
+        <!-- Idriss: lists current user's own posts -->
         <activity android:name=".MyPostsActivity"
             android:exported="false"
             android:parentActivityName=".ItemFeedActivity" />
 
+        <!-- Ines: create / edit a lost-or-found report -->
         <activity android:name=".PostItemActivity"
             android:exported="false"
             android:parentActivityName=".ItemFeedActivity" />

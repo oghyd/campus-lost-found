@@ -1,3 +1,20 @@
+<!--
+    strings.xml — all user-visible string resources for Campus Lost & Found.
+
+    Groups:
+    - App name
+    - Feed menu labels (filter / sort / logout)
+    - Status display strings and transition error messages
+    - Login validation error messages
+    - Empty-state messages
+    - Dialog button labels
+    - Post form labels and feedback messages
+    - Search hint
+    - My Posts screen title
+
+    No hardcoded strings should appear in Java or XML layouts — always reference @string/<name>.
+    All team members may add entries here; resolve merge conflicts on this file via PR.
+-->
 <resources>
     <string name="app_name">CampusLostFound</string>
 

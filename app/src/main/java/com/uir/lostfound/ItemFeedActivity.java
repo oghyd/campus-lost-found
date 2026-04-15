@@ -91,6 +91,7 @@ public class ItemFeedActivity extends AppCompatActivity {
         }
     }
 
+    /** Fetches all items from Realm and attaches a fresh adapter to the RecyclerView. */
     private void loadItems() {
         RealmResults<LostItem> items = realmHelper.getAllItems();
         adapter = new ItemFeedAdapter(this, items);
@@ -103,6 +104,7 @@ public class ItemFeedActivity extends AppCompatActivity {
         updateEmptyState();
     }
 
+    /** Shows the empty-state TextView when the adapter has no visible items, hides it otherwise. */
     private void updateEmptyState() {
         if (adapter.isEmpty()) {
             tvEmpty.setVisibility(View.VISIBLE);
@@ -113,6 +115,7 @@ public class ItemFeedActivity extends AppCompatActivity {
         }
     }
 
+    /** Sends the user back to LoginActivity and closes this Activity (clears back stack entry). */
     private void redirectToLogin() {
         startActivity(new Intent(this, LoginActivity.class));
         finish();

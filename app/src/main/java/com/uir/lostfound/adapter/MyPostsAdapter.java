@@ -14,6 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 import io.realm.RealmResults;
 import com.uir.lostfound.utils.StatusUtils;
+
+/**
+ * MyPostsAdapter — RecyclerView adapter for the "My Posts" screen.
+ *
+ * Binds the current user's {@link com.uir.lostfound.model.LostItem} objects
+ * to {@code item_my_post_card.xml} cards.
+ *
+ * Each card exposes two action buttons:
+ * - Edit (pencil icon) — delegates to {@link OnItemClickListener#onEdit(com.uir.lostfound.model.LostItem)}.
+ * - Delete (bin icon) — delegates to {@link OnItemClickListener#onDelete(com.uir.lostfound.model.LostItem)}.
+ *
+ * Status chip colours are resolved through {@link com.uir.lostfound.utils.StatusUtils}.
+ *
+ * Ownership: Idriss.
+ */
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder> {
 
     private Context context;

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_main.xml — Phase 1 skeleton screen, no longer the LAUNCHER.
+    Shows a centred "Campus Lost & Found" welcome TextView.
+    MainActivity immediately forwards to ItemFeedActivity; this layout is
+    effectively unused at runtime but kept to avoid a compile error.
+-->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

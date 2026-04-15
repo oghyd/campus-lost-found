@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    fragment_item_detail.xml — full-detail view for a single LostItem.
+    Inflated by ItemDetailFragment.
+
+    Structure (scrollable):
+    - img_photo   — full-width photo (220dp, hidden when no photo is attached).
+    - MaterialCardView containing:
+        - tv_title, chip_type, chip_status (inline chips).
+        - Divider, then labelled fields: Description, Location, Category.
+        - Divider, then: Posted by (tv_owner), tv_date.
+
+    Chip colours for chip_type and chip_status are set programmatically in ItemDetailFragment.
+
+    Ownership: Mona.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"

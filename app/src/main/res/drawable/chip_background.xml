@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    chip_background.xml — reusable rounded-rectangle drawable used as the background
+    for status and type chip TextViews in item_card.xml and item_my_post_card.xml.
+
+    The solid colour (#E0E0E0 light grey) is overridden at runtime via
+    background.setTint() in the adapters, so only the shape/corner/padding values
+    from this file are relevant at layout-inflation time.
+-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="16dp" />
     <padding android:left="8dp" android:top="4dp" android:right="8dp" android:bottom="4dp" />

@@ -8,6 +8,16 @@ import androidx.core.app.NotificationCompat;
 
 import com.uir.lostfound.utils.NotificationHelper;
 
+/**
+ * ClaimNotificationReceiver — BroadcastReceiver that fires a local notification
+ * when an item is claimed.
+ *
+ * Triggered by {@link com.uir.lostfound.utils.NotificationHelper#sendClaimedNotification}
+ * via AlarmManager. Reads the owner name and item title from the Intent extras
+ * and posts a notification on the {@code claim_channel} channel.
+ *
+ * Ownership: Mona.
+ */
 public class ClaimNotificationReceiver extends BroadcastReceiver {
 
     @Override

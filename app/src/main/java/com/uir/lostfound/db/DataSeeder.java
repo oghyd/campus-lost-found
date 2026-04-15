@@ -3,6 +3,16 @@ package com.uir.lostfound.db;
 import com.uir.lostfound.model.LostItem;
 import java.util.UUID;
 
+/**
+ * DataSeeder — inserts demo data into Realm on first launch.
+ *
+ * Called from {@link com.uir.lostfound.MyApplication#onCreate()} guarded by a size check:
+ * if Realm already contains items the seeder does nothing (idempotent).
+ *
+ * Seed contents:
+ * - 3 registered users: STU001 (Hasnae), STU002 (Fatima), STU003 (Youssef).
+ * - 10 mixed LOST/FOUND items across all categories and statuses, staggered by 1 hour each.
+ */
 public class DataSeeder {
 
     public static void seedData(RealmHelper realmHelper) {

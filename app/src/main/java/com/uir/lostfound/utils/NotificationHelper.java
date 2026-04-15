@@ -10,12 +10,28 @@ import android.os.Build;
 
 import com.uir.lostfound.ClaimNotificationReceiver;
 
+/**
+ * NotificationHelper — utility class for creating notification channels and scheduling
+ * "item claimed" notifications via AlarmManager.
+ *
+ * On API 26+ a notification channel ({@code claim_channel}) must be created before
+ * any notification can be posted. {@link #createNotificationChannel(Context)} is
+ * idempotent and safe to call multiple times.
+ *
+ * {@link #sendClaimedNotification(Context, String, String)} schedules a broadcast to
+ * {@link com.uir.lostfound.ClaimNotificationReceiver} via AlarmManager (fires in ~1 second).
+ *
+ * Ownership: Mona.
+ */
 public class NotificationHelper {
 
     public static final String CHANNEL_ID   = "claim_channel";
     public static final String CHANNEL_NAME = "Claim Notifications";
 
-    // Crée le canal de notification (obligatoire API 26+)
+    /**
+     * Registers the claim notification channel with the system.
+     * Required on API 26+; no-op on earlier versions.
+     */
     public static void createNotificationChannel(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -32,7 +48,14 @@ public class NotificationHelper {
         }
     }
 
-    // Programme la notification via AlarmManager (Bonus 2)
+    /**
+     * Schedules a broadcast to {@link com.uir.lostfound.ClaimNotificationReceiver}
+     * via AlarmManager (RTC_WAKEUP, fires in 1 second).
+     *
+     * @param context   Android context (Activity or Application).
+     * @param ownerName name of the item's owner, shown in the notification body.
+     * @param itemTitle title of the item that was claimed.
+     */
     public static void sendClaimedNotification(Context context,
                                                String ownerName,
                                                String itemTitle) {

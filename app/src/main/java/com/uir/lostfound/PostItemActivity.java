@@ -29,6 +29,17 @@ import java.io.File;
 import java.io.IOException;
 
 
+/**
+ * PostItemActivity — form for creating or editing a lost/found report.
+ *
+ * Responsibilities:
+ * - Collect title, description, location, category, type (LOST/FOUND), and date.
+ * - Optionally attach a photo via the camera (Bonus 1).
+ * - When launched with ITEM_ID extra, pre-fills the form for editing an existing item.
+ * - Persists the item through RealmHelper.
+ *
+ * Ownership: Ines (form + camera); Omar wires SessionManager for owner fields.
+ */
 public class PostItemActivity extends AppCompatActivity {
 
     // UI fields
@@ -85,6 +96,7 @@ public class PostItemActivity extends AppCompatActivity {
         // Phase 4: camera — wired in Phase 4
         btnAttachPhoto.setOnClickListener(v -> openCamera());
     }
+    /** Checks camera permission before launching the camera intent. */
     private void openCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -95,6 +107,7 @@ public class PostItemActivity extends AppCompatActivity {
         launchCameraIntent();
     }
 
+    /** Creates a temp file via ImageHelper, then fires ACTION_IMAGE_CAPTURE with a FileProvider URI. */
     private void launchCameraIntent() {
         try {
             File photoFile = ImageHelper.createImageFile(this);
@@ -215,6 +228,10 @@ public class PostItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Pre-fills every form field with the existing values of the item identified by {@code itemId}.
+     * Also rewires the submit button to call {@link RealmHelper#updateItem} instead of insert.
+     */
     private void prefillFormForEdit(String itemId) {
         LostItem item = RealmHelper.getInstance().getItemById(itemId);
         if (item == null) return;
@@ -289,6 +306,12 @@ public class PostItemActivity extends AppCompatActivity {
 
 
     // ── Validation ────────────────────────────────────────────
+    /**
+     * Validates all required fields. Sets inline errors on EditTexts and shows
+     * Toast messages for toggle/date errors.
+     *
+     * @return true if all fields are filled correctly, false otherwise.
+     */
     private boolean validateForm() {
         boolean valid = true;
 

@@ -3,6 +3,27 @@ package com.uir.lostfound.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+/**
+ * LostItem — the single Realm data model for the app.
+ *
+ * Fields:
+ * - {@code id}            — UUID primary key, set at creation time.
+ * - {@code title}         — short name of the item.
+ * - {@code description}   — free-text details.
+ * - {@code location}      — where the item was lost or found.
+ * - {@code category}      — one of: Electronics, Documents, Clothing, Bags, Keys, Other.
+ * - {@code type}          — "LOST" or "FOUND".
+ * - {@code status}        — "OPEN", "CLAIMED", or "RETURNED" (see StatusUtils constants).
+ * - {@code photoPath}     — absolute path to the local photo file, nullable.
+ * - {@code timestamp}     — epoch millis of when the report was created.
+ * - {@code ownerStudentId}— student ID of the reporter (from SessionManager).
+ * - {@code ownerName}     — display name of the reporter.
+ *
+ * All writes must go through {@code realm.executeTransaction()}.
+ * Never pass a managed instance across threads; use {@code realm.copyFromRealm()} first.
+ *
+ * Ownership: Idriss.
+ */
 public class LostItem extends RealmObject {
     @PrimaryKey
     private String id;

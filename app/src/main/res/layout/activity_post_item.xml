@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_post_item.xml — form for creating or editing a lost/found report.
+
+    Fields (all inside a scrollable LinearLayout):
+    - et_title        TextInputEditText — item title (required).
+    - et_description  TextInputEditText — multi-line description (required).
+    - et_location     TextInputEditText — where the item was lost/found (required).
+    - spinner_category Spinner — category selection (Electronics, Documents, …).
+    - toggle_type      MaterialButtonToggleGroup — LOST / FOUND (required).
+    - btn_date         MaterialButton — opens a DatePickerDialog (required).
+    - iv_photo_preview ImageView — preview of attached photo (hidden until photo selected).
+    - btn_attach_photo MaterialButton — triggers camera intent (optional).
+    - btn_submit       MaterialButton — validates form and saves to Realm.
+
+    Ownership: Ines (camera/photo section); rest shared.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"

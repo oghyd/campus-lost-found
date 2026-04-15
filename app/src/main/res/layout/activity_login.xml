@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_login.xml — login screen layout.
+
+    Structure:
+    - ScrollView root ensures content is accessible on small screens.
+    - App title + subtitle TextViews at the top.
+    - etStudentId — EditText for the student ID (text input).
+    - etName      — EditText for the user's full name.
+    - btnLogin    — triggers LoginActivity.attemptLogin().
+
+    Ownership: Omar.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

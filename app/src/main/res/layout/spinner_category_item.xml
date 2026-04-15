@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    spinner_category_item.xml — single row layout used for both the selected view
+    and the dropdown rows of the category Spinner in PostItemActivity.
+
+    Set as both the normal view and the drop-down view resource via ArrayAdapter
+    so that text styling is consistent in both collapsed and expanded states.
+
+    Ownership: Ines.
+-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/spinner_text"
     android:layout_width="match_parent"

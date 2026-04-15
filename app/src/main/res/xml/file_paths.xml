@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    file_paths.xml — FileProvider path configuration for sharing internal storage files.
+
+    Used by PostItemActivity when creating a camera URI via:
+        FileProvider.getUriForFile(context, "com.uir.lostfound.fileprovider", file)
+
+    The <files-path> entry exposes the app's internal files directory (Context.getFilesDir())
+    under the authority "com.uir.lostfound.fileprovider". The camera app receives a
+    content:// URI instead of a file:// URI (required API 24+).
+
+    Ownership: Ines.
+-->
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <files-path
         name="my_images"

@@ -1,3 +1,12 @@
+<!--
+    themes.xml — app-wide Material theme applied to every Activity.
+
+    Extends Theme.MaterialComponents.DayNight.NoActionBar so each Activity
+    manages its own Toolbar (no system ActionBar injected automatically).
+    Status bar colour is set to primary_variant (darker navy).
+
+    Ownership: Omar.
+-->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.CampusLostFound" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>

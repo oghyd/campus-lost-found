@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    colors.xml — global colour palette for Campus Lost & Found.
+
+    Sections:
+    - Material baseline colours (purple/teal) — kept from project scaffold, rarely used directly.
+    - Brand colours: primary (navy #1E3A8A) and secondary (green #10B981).
+    - Status chip colours: open (dark green), claimed (amber), returned (grey), unknown (light grey).
+
+    All colours referenced as @color/<name> in layouts and as R.color.<name> in Java.
+    Ownership: Omar seeds status colours; all team may add entries via PR.
+-->
 <resources>
     <color name="purple_200">#BB86FC</color>
     <color name="purple_500">#6200EE</color>
