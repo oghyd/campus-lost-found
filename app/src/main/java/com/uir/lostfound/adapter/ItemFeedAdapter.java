@@ -17,6 +17,21 @@ import java.util.List;
 import java.util.Locale;
 import io.realm.RealmResults;
 import com.uir.lostfound.utils.StatusUtils;
+
+/**
+ * ItemFeedAdapter — RecyclerView adapter for the main item feed.
+ *
+ * Binds {@link com.uir.lostfound.model.LostItem} objects to {@code item_card.xml} cards.
+ * Supports:
+ * - Text search via {@link #filter(String)} (title + description match).
+ * - Type filter via {@link #filterByType(String)} (LOST / FOUND / all).
+ * - Date sort via {@link #sortByDate(boolean)}.
+ * - Click callback via {@link OnItemClickListener}.
+ *
+ * Status chip colours are resolved through {@link com.uir.lostfound.utils.StatusUtils}.
+ *
+ * Ownership: Idriss.
+ */
 public class ItemFeedAdapter extends RecyclerView.Adapter<ItemFeedAdapter.ViewHolder> {
 
     private Context context;

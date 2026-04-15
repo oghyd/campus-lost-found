@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    dialog_claim_confirm.xml — custom dialog body for the "Mark as Claimed" confirmation.
+
+    Note: ItemDetailActivity currently uses an AlertDialog.Builder inline rather than
+    inflating this layout. This file is kept for a future custom dialog implementation.
+
+    Ownership: Mona.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

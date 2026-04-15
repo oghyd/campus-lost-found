@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_my_posts.xml — "My Posts" screen layout.
+
+    Structure:
+    - Toolbar with back navigation (primary colour).
+    - tv_empty — shown when the user has no posts (gravity center).
+    - recyclerView — shows MyPostsAdapter cards (hidden when empty).
+
+    Ownership: Idriss.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"

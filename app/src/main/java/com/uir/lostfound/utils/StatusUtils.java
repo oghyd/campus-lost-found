@@ -125,25 +125,7 @@ public class StatusUtils {
         return ContextCompat.getColor(context, getChipTextColorRes(status));
     }
 
-    /**
-     * Returns true if an item can move from OPEN to CLAIMED.
-     *
-     * @param currentStatus current item status
-     * @return true if transition is allowed
-     */
-    public static boolean canMarkClaimed(String currentStatus) {
-        return STATUS_OPEN.equals(normalizeStatus(currentStatus));
-    }
 
-    /**
-     * Returns true if an item can move from CLAIMED to RETURNED.
-     *
-     * @param currentStatus current item status
-     * @return true if transition is allowed
-     */
-    public static boolean canMarkReturned(String currentStatus) {
-        return STATUS_CLAIMED.equals(normalizeStatus(currentStatus));
-    }
     public static int getChipColor(String status) {
         if (status == null) return 0xFF757575;
         switch (status) {

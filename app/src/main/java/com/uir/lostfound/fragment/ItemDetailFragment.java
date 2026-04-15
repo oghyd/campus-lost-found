@@ -22,6 +22,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * ItemDetailFragment — displays the full details of a single {@link com.uir.lostfound.model.LostItem}.
+ *
+ * Loaded by {@link com.uir.lostfound.ItemDetailActivity} into the {@code fragment_container}
+ * FrameLayout. Receives the item id via the {@code ARG_ITEM_ID} Bundle argument.
+ *
+ * Use the factory method {@link #newInstance(String)} instead of a direct constructor
+ * to pass arguments safely across configuration changes.
+ *
+ * Status chip colour is resolved through {@link com.uir.lostfound.utils.StatusUtils#getChipColor(String)}.
+ *
+ * Ownership: Mona.
+ */
 public class ItemDetailFragment extends Fragment {
 
     private static final String ARG_ITEM_ID = "item_id";

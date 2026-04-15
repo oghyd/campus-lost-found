@@ -10,6 +10,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 //import com.uir.lostfound.databinding.ActivityMainBinding;
 
+/**
+ * MainActivity — Phase 1 skeleton entry point.
+ *
+ * This Activity is kept for reference but is no longer the LAUNCHER.
+ * LoginActivity is the actual launcher; this class immediately forwards
+ * to ItemFeedActivity and finishes itself.
+ *
+ * Safe to remove in a future cleanup pass.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

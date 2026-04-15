@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_item_detail.xml — detail screen for a single lost/found item.
+
+    Structure:
+    - Toolbar at the top (primary colour, back arrow).
+    - fragment_container FrameLayout (weight=1) — ItemDetailFragment is committed here.
+    - Bottom panel (white card, elevation 8dp) with two action buttons:
+        - btn_claim          — "Mark as Claimed" (hidden by default, shown to non-owners).
+        - btn_confirm_returned — "Confirm Returned" (hidden by default, shown to owner when CLAIMED).
+
+    Ownership: Mona (fragment); Omar (status buttons).
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

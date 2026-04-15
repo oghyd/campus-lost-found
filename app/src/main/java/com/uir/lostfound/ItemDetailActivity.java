@@ -16,6 +16,18 @@ import com.uir.lostfound.model.LostItem;
 import com.uir.lostfound.utils.NotificationHelper;
 import com.uir.lostfound.utils.SessionManager;
 
+/**
+ * ItemDetailActivity — shows the full details of a single lost/found item.
+ *
+ * Delegates the display to {@link com.uir.lostfound.fragment.ItemDetailFragment}.
+ * Also owns the status-transition buttons:
+ * - "Mark as Claimed" — visible to non-owners when status = OPEN.
+ * - "Confirm Returned" — visible to the item owner when status = CLAIMED.
+ *
+ * Receives the item id via Intent extra {@code "item_id"}.
+ *
+ * Ownership: Mona (fragment + dialogs); Omar (status flow, session check).
+ */
 public class ItemDetailActivity extends AppCompatActivity {
 
     private String itemId;
@@ -63,7 +75,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         setupButtons();
     }
 
-    // Charge le Fragment dans le FrameLayout
+    /** Instantiates ItemDetailFragment with the item id and commits it into fragment_container. */
     private void loadFragment() {
         ItemDetailFragment fragment = ItemDetailFragment.newInstance(itemId);
         getSupportFragmentManager()
@@ -72,7 +84,11 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .commit();
     }
 
-    // Affiche les bons boutons selon le rôle de l'utilisateur
+    /**
+     * Shows the correct action button(s) based on the current user's role and item status:
+     * - Non-owner + status OPEN  → "Mark as Claimed" button visible.
+     * - Owner       + status CLAIMED → "Confirm Returned" button visible.
+     */
     private void setupButtons() {
         // ⚠️ Adapte getStudentId() selon ce qu'Omar a implémenté dans SessionManager
         String currentUserId = sessionManager.getStudentId();
@@ -99,7 +115,10 @@ public class ItemDetailActivity extends AppCompatActivity {
         });
     }
 
-    // Dialog : confirmer le claim
+    /**
+     * Displays a confirmation dialog for claiming an item.
+     * On confirmation: updates status to CLAIMED and sends a notification to the owner.
+     */
     private void showClaimDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Marquer comme Claimed ?")
@@ -117,7 +136,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Confirmer que l'item est retourné
+    /** Displays a confirmation dialog for marking the item as returned (CLAIMED → RETURNED). */
     private void confirmReturned() {
         new AlertDialog.Builder(this)
                 .setTitle("Confirmer le retour")
@@ -160,7 +179,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    // Dialog : confirmer la suppression
+    /** Displays a confirmation dialog before permanently deleting the item from Realm. */
     private void showDeleteDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Supprimer le post")

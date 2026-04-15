@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_card.xml — card layout for a single item in the main feed (ItemFeedAdapter).
+
+    Structure (horizontal row):
+    - thumbnail   — 60×60dp image placeholder (left).
+    - Middle column: title (bold), category, timestamp.
+    - Right column: typeChip (LOST/FOUND) and statusChip stacked vertically.
+
+    Both chips use @drawable/chip_background for rounded corners; their colour is
+    set programmatically via StatusUtils in ItemFeedAdapter.
+
+    Ownership: Idriss.
+-->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
