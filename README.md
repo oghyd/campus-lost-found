@@ -19,10 +19,10 @@ Android mobile application to help students and staff report and recover lost it
 - fragment/
 
 ## Team
-- Omar: Authentication, session, app shell
-- Idriss: Feed, Realm model/helper, My Posts
-- Ines: Post item form, camera/photo
-- Mona: Item detail, fragment, notifications
+- @oghyd: Authentication, session, app shell
+- @Idriss-23: Feed, Realm model/helper, My Posts
+- @sneakersaddict: Post item form, camera/photo
+- @monaazzaoui17-glitch: Item detail, fragment, notifications
 
 ## Phase 1 done
 - Android Studio project created
